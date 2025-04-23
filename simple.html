@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周龙迟的个人网站</title>
+    <!-- 内部 CSS -->
+    <style>
+        /* 基本重置和默认值 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        /* 默认显示中文 (因为上面 body class="show-zh") */
+        body.show-en .lang-zh, body.show-en .lang-ko { display: none !important; }
+        body.show-en .lang-en { display: inline !important; }
+
+        body.show-ko .lang-en, body.show-ko .lang-zh { display: none !important; }
+        body.show-ko .lang-ko { display: inline !important; }
+
+        body.show-zh .lang-en, body.show-zh .lang-ko { display: none !important; }
+        body.show-zh .lang-zh { display: inline !important; }
+
+        a {
+            color: #555;
+            text-decoration: none;
+        }
+
+        /* --- 语言切换器 --- */
+        .language-switcher {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .language-switcher button {
+            background: none;
+            border: none;
+            padding: 5px 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #333;
+            margin-left: 5px;
+        }
+
+        .language-switcher button.active {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        /* --- 头部导航 --- */
+        header {
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: inline-block;
+        }
+
+        header nav ul li {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            color: #555;
+            font-weight: 500;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        header nav ul li a:hover {
+            color: #000;
+        }
+
+        /* --- 首屏区域 (头图) --- */
+        #hero {
+            height: 75vh;
+            background-image: url('周龙迟专用头像.jpg');
+            background-size: cover;
+            background-position: center center;
+            position: relative;
+            background-color: #f0f0f0;
+        }
+
+        /* --- 欢迎区域 (名字区域) --- */
+        #welcome {
+            background-color: #eaf3f7;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        #welcome h2 {
+            font-family: 'Brush Script MT', 'Brush Script Std', cursive,
+                         'STXingkai', '华文行楷', 'STKaiti', 'KaiTi', '楷体',
+                         'Nanum Brush Script',
+                         'Malgun Gothic', 'Apple SD Gothic Neo',
+                         'PingFang SC', 'Microsoft YaHei',
+                         sans-serif;
+            font-size: 4em;
+            font-weight: normal;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        #welcome p {
+            font-size: 1.1em;
+            color: #666;
+            max-width: 650px;
+            margin: 0 auto 15px auto;
+        }
+
+        #welcome p:last-child {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* --- 内容区段样式 (通用) --- */
+        .content-section {
+            padding: 80px 20px;
+            max-width: 960px;
+            margin: 0 auto;
+            min-height: 300px;
+            border-bottom: 1px solid #eee;
+        }
+        .content-section:last-child{
+            border-bottom: none;
+        }
+
+        .content-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2em;
+            color: #333;
+        }
+
+        /* --- 联系我板块的社交图标样式 --- */
+        .social-icons {
+            text-align: center;
+            padding: 30px 0;
+        }
+        .social-icons a {
+            display: inline-block;
+            margin: 0 15px;
+            font-size: 2.5em;
+            color: #555;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        /* --- 滚动动画 --- */
+        .scroll-reveal {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: transform, opacity;
+        }
+
+        .scroll-reveal.reveal-from-bottom {
+            transform: translateY(40px);
+        }
+
+        .scroll-reveal.reveal-from-top {
+            transform: translateY(-40px);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 页脚 --- */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 120px;
+            background-color: #f8f8f8;
+            color: #777;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body class="show-zh">
+
+    <!-- 语言切换器 -->
+    <div class="language-switcher" id="lang-switcher">
+        <button data-lang="en">EN</button>
+        <button data-lang="zh" class="active">中</button>
+        <button data-lang="ko">한</button>
+    </div>
+
+    <!-- 头部导航 -->
+    <header>
+        <nav>
+            <ul>
+                <!-- 使用 span 进行语言切换 -->
+                <li><a href="#about">
+                    <span class="lang-en">About</span>
+                    <span class="lang-zh">关于我</span>
+                    <span class="lang-ko">소개</span>
+                </a></li>
+                <li><a href="#portfolio">
+                    <span class="lang-en">Portfolio</span>
+                    <span class="lang-zh">作品集</span>
+                    <span class="lang-ko">포트폴리오</span>
+                </a></li>
+                <li><a href="#skills">
+                    <span class="lang-en">Skills</span>
+                    <span class="lang-zh">技能</span>
+                    <span class="lang-ko">기술</span>
+                </a></li>
+                <li><a href="#contact">
+                    <span class="lang-en">Contact</span>
+                    <span class="lang-zh">联系我</span>
+                    <span class="lang-ko">연락처</span>
+                </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 首屏区域 -->
+    <section id="hero">
+        <!-- 背景图区域 -->
+    </section>
+
+    <!-- 欢迎/名字区域 -->
+    <section id="welcome">
+        <h2 class="scroll-reveal">
+             <span class="lang-en">Zhou Long Chi</span>
+             <span class="lang-zh">周龙迟</span>
+             <span class="lang-ko">주용지</span>
+        </h2>
+        <p class="scroll-reveal">
+            <span class="lang-en">This space documents the journey and reflections of a student exploring the fields of Artificial Intelligence and Computer Science.</span>
+            <span class="lang-zh">这里记录着一个学生在人工智能和计算机领域探索的足迹与思考。</span>
+            <span class="lang-ko">여기에는 한 학생이 인공지능과 컴퓨터 공학 분야에서 탐구하는 여정과 생각이 기록되어 있습니다.</span>
+        </p>
+         <p class="scroll-reveal">
+            <span class="lang-en">Feel free to browse my learning insights, coding experiments, and shared projects, and experience the fascination of technology together.</span>
+            <span class="lang-zh">欢迎查阅我的学习心得、代码实验和项目分享，一起感受技术的魅力。</span>
+            <span class="lang-ko">저의 학습 노트, 코드 실험 및 프로젝트 공유 자료를 자유롭게 살펴보시고, 함께 기술의 매력을 느껴보세요.</span>
+        </p>
+    </section>
+
+    <!-- 关于我 区段 -->
+    <section id="about" class="content-section scroll-reveal">
+        <h2>
+            <span class="lang-en">About Me</span>
+            <span class="lang-zh">关于我</span>
+            <span class="lang-ko">소개</span>
+        </h2>
+        <p style="text-indent: 2em;" class="scroll-reveal">
+            <span class="lang-en">Hello! I'm ZHOU LONGCHI</span>
+            <span class="lang-zh">你好！我叫周龙迟。</span>
+            <span class="lang-ko">안녕하세요! 저는 주용지입니다.</span>
+        </p>
+        <p style="text-indent: 2em;" class="scroll-reveal">
+            <span class="lang-en">I'm a graduate of Guangxin High School, a distinguished provincial key high school in Jiangxi Province, recognized for its long history and commitment to academic excellence. 
+                The rigorous academic environment at Guangxin not only provided me with a strong foundation in core subjects but also nurtured my abilities in independent thinking and problem-solving. 
+                Since childhood, I have possessed an irrepressible passion for computer science, a drive extending beyond mere interest towards a deep fascination with logical construction and technological creation. 
+                This compelled me to dedicate my spare time to self-directed exploration, learning programming languages like Python and C++, and applying these tools to tackle small, practical problems, thereby experiencing the fulfillment of turning ideas into reality.</span>
+            <span class="lang-zh">我毕业于江西省广信中学，一所以其悠久历史和卓越教学质量而闻名的省级重点中学。
+                在广信中学严谨的学术氛围中，我不仅打下了扎实的文化课基础，更培养了独立思考与解决问题的能力。
+                自幼起，我对计算机科学领域便怀有难以抑制的感情，这份感情并非简单的兴趣，而是一种对逻辑构建和技术创造的深度向往。
+                这驱使我在课余时间主动探索，自学了Python和C++等编程语言，并尝试利用这些工具解决边边的小问题，从中体会到了将想法变为现实的成就感。</span>
+            <span class="lang-ko">저는 오랜 역사와 탁월한 교육 품질로 인정받는 장시성(江西省)의 성급 중점 고등학교인 광신고등학교(广信中学)를 졸업했습니다. 
+                광신고등학교의 엄격한 학문적 분위기 속에서 저는 견고한 기초 과목 지식을 쌓았을 뿐만 아니라, 독립적인 사고와 문제 해결 능력을 함양했습니다. 
+                어린 시절부터 컴퓨터 과학 분야에 대한 억누를 수 없는 열정을 품어왔는데, 이는 단순한 흥미를 넘어 논리 구축과 기술 창조에 대한 깊은 동경이었습니다. 
+                이는 제가 여가 시간을 활용하여 python과 C++와 같은 프로그래밍 언어를 독학하고, 이러한 도구들을 사용하여 주변의 작은 문제들을 해결해 보면서 아이디어를 현실로 만드는 성취감을 느끼도록 이끌었습니다.</span>
+        </p>
+        <p style="text-indent: 2em;" class="scroll-reveal">
+            <span class="lang-en">Presently, Artificial Intelligence is permeating every facet of society at an unprecedented pace, from breakthroughs in Natural Language Processing to the widespread application of Computer Vision. 
+                Its immense transformative potential excites me greatly. 
+                My interest extends beyond the technical advancements to encompass the emerging ethical and societal considerations surrounding AI. 
+                The exploration of the boundaries of machine consciousness in the film Ex Machina resonated deeply with me, reinforcing my aspiration to contribute to the development of AI that possesses genuine understanding, creativity, and perhaps even ethical consideration. 
+                To systematically build my knowledge base, I have actively utilized platforms like edX and Coursera, which host courses from top global universities, delving into critical subjects including data structures, algorithm design, core machine learning theories (such as supervised and unsupervised learning), and deep learning fundamentals. 
+                Concurrently, I regard Kaggle as a vital bridge connecting theory with real-world challenges. By participating in its diverse data science competitions, I engage with a global community of learners and professionals. 
+                While my rankings are still developing, the process of handling complex datasets, performing intricate feature engineering, experimenting with various model architectures, and learning to optimize model performance has equipped me with invaluable practical experience and an understanding of the end-to-end workflow from raw data to actionable insights. 
+                These endeavors have not only significantly enriched my technical knowledge but also cultivated my resilience in analyzing and resolving complex problems under pressure. 
+                I eagerly anticipate delving deeper into the field of AI during my future higher education, aiming to contribute to the responsible advancement of this technology.</span>
+            <span class="lang-zh">当前，人工智能正以前所未有的速度渗透到社会生活的方方面面，从自然语言处理的突破到计算机视觉的广泛应用，其巨大的变革potential excites me greatly. 
+                我不仅关注AI的技术进展，也开始思考其带来的伦理和社会议题。
+                电影《机械姬》(Ex Machina)中关于机器意识边界的探讨，深刻触动了我，也让我更加坚定了未来投身于研发真正具备理解力、创造力乃至道德考量的人工智能的梦想。
+                为了系统性地构建知识体系，我积极利用edX、Coursera这类汇集全球顶尖大学课程资源的平台，深入学习了包括数据结构、算法设计、机器学习核理论(如监督与无监督学习)、深度学习等关键内容。
+                同时，我视Kaggle为连接理论与真实世界挑战的桥梁，通过参与其举办的各类数据科学竞赛，与来自全球的学习者和专业人士同台竞技。
+                尽管名次尚待提升，但在处理复杂数据集、进行精密的特征工程、尝试不同的模型架构以及学习优化模型性能的过程中，我获得了宝贵的实战经验，理解了从原始数据到有价值洞见的完整流程。
+                这些经历不仅极大丰富了我的技术知识库，更锻炼了我在压力下分析和解决复杂问题的韧性。我热切期待在未来的高等教育阶段，能够更深入地钻研AI领域，为推动这项技术的健康发展贡献自己的力量。</span>
+            <span class="lang-ko">현재 인공지능(AI)은 자연어 처리의 혁신부터 컴퓨터 비전의 광범위한 응용에 이르기까지 전례 없는 속도로 사회생활의 모든 측면에 스며들고 있으며, 그 엄청난 변화의 잠재력은 저를 매우 설레게 합니다. 
+                저는 AI의 기술적 진보뿐만 아니라, 그것이 야기하는 윤리적, 사회적 문제에 대해서도 깊이 생각하기 시작했습니다. 
+                영화 <엑스 마키나>(Ex Machina)에서 다루어진 기계 의식의 경계에 대한 탐구는 저에게 깊은 감명을 주었으며, 진정한 이해력, 창의력, 나아가 도덕적 고려까지 갖춘 인공지능 개발에 기여하고자 하는 미래의 꿈을 더욱 확고히 해주었습니다. 
+                지식 체계를 체계적으로 구축하기 위해, 저는 세계 유수 대학의 강의를 제공하는 edX, Coursera와 같은 플랫폼을 적극 활용하여 자료 구조, 알고리즘 설계, 핵심 머신러닝 이론(지도 학습 및 비지도 학습 등), 그리고 딥러닝 기초(특히 합성곱 신경망 CNN과 순환 신경망 RNN) 등 주요 내용을 깊이 있게 학습했습니다. 
+                동시에 저는 Kaggle을 이론과 현실 세계의 도전을 연결하는 다리로 여기며, 다양한 데이터 과학 경진대회에 참여하여 전 세계 학습자 및 전문가들과 경쟁하고 있습니다. 
+                비록 순위는 아직 개선의 여지가 있지만, 복잡한 데이터셋을 처리하고, 정교한 특성 공학(feature engineering)을 수행하며, 다양한 모델 아키텍처를 시도하고 모델 성능을 최적화하는 방법을 배우는 과정에서 귀중한 실전 경험을 얻었습니다. 
+                이러한 경험들은 저의 기술 지식을 크게 풍부하게 했습니다. 
+                압박감 속에서 복잡한 문제를 분석하고 해결하는 회복력을 길러주었습니다. 저는 미래의 고등 교육 단계에서 AI 분야를 더욱 깊이 탐구하여 이 기술의 건전한 발전에 기여할 수 있기를 간절히 기대하고 있습니다.
+            </span>
+        </p>
+    </section>
+
+    <!-- 作品集 区段 -->
+    <section id="portfolio" class="content-section scroll-reveal">
+        <h2>
+            <span class="lang-en">Portfolio</span>
+            <span class="lang-zh">作品集</span>
+            <span class="lang-ko">포트폴리오</span>
+        </h2>
+        <!-- 项目1 -->
+        <div class="project-entry" style="margin-bottom: 60px;">
+            <h3>
+                <span class="lang-en">1. Titanic - Machine Learning from Disaster</span>
+                <span class="lang-zh">1. 泰坦尼克号生存预测机器学习项目</span>
+                <span class="lang-ko">1. 타이타닉 생존 예측 머신러닝 프로젝트</span>
+            </h3>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <a href="https://www.kaggle.com/competitions/titanic" target="_blank" style="text-decoration: none;">
+                        <img src="https://www.kaggle.com/static/images/site-logo.svg" alt="Kaggle" style="width: 30px; vertical-align: middle;">
+                        <span class="lang-en" style="vertical-align: middle; margin-left: 5px;">Kaggle Competition</span>
+                        <span class="lang-zh" style="vertical-align: middle; margin-left: 5px;">Kaggle竞赛页面</span>
+                        <span class="lang-ko" style="vertical-align: middle; margin-left: 5px;">Kaggle 경진대회</span>
+                    </a>
+                </div>
+                
+                <div style="display: inline-block; margin: 0 15px;">
+                    <a href="https://github.com/zlcgacn/Titanic---Machine-Learning-from-Disaster" target="_blank" style="text-decoration: none;">
+                        <img src="https://github.githubassets.com/favicons/favicon.svg" alt="GitHub" style="width: 30px; vertical-align: middle;">
+                        <span class="lang-en" style="vertical-align: middle; margin-left: 5px;">Source Code</span>
+                        <span class="lang-zh" style="vertical-align: middle; margin-left: 5px;">GitHub源代码</span>
+                        <span class="lang-ko" style="vertical-align: middle; margin-left: 5px;">소스 코드</span>
+                    </a>
+                </div>
+            </div>
+            
+            <p class="lang-en">Implemented machine learning workflow including data preprocessing, feature engineering, model selection and hyperparameter tuning using Random Forest and XGBoost algorithms.</p>
+            <p class="lang-zh">使用随机森林和XGBoost算法，完整实现了数据预处理、特征工程、模型选择和超参数调优的机器学习全流程。</p>
+            <p class="lang-ko">랜덤 포레스트와 XGBoost 알고리즘을 활용해 데이터 전처리, 특징 공학, 모델 선택 및 하이퍼파라미터 튜닝을 포함한 머신러닝 워크플로우를 구현</p>
+        </div>
+        <!-- 项目2 -->
+        <div class="project-entry" style="margin-bottom: 60px;">
+            <h3>
+                <span class="lang-en">2. Drawing with LLMs</span>
+                <span class="lang-zh">2. 基于大语言模型的绘画生成项目</span>
+                <span class="lang-ko">2. 대형 언어모델 기반 그림 생성 프로젝트</span>
+            </h3>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <a href="https://www.kaggle.com/competitions/drawing-with-llms" target="_blank" style="text-decoration: none;">
+                        <img src="https://www.kaggle.com/static/images/site-logo.svg" alt="Kaggle" style="width: 30px; vertical-align: middle;">
+                        <span class="lang-en" style="vertical-align: middle; margin-left: 5px;">Kaggle Competition</span>
+                        <span class="lang-zh" style="vertical-align: middle; margin-left: 5px;">Kaggle竞赛页面</span>
+                        <span class="lang-ko" style="vertical-align: middle; margin-left: 5px;">Kaggle 경진대회</span>
+                    </a>
+                </div>
+                
+                <div style="display: inline-block; margin: 0 15px;">
+                    <a href="https://github.com/zlcgacn/Drawing-with-LLMs-" target="_blank" style="text-decoration: none;">
+                        <img src="https://github.githubassets.com/favicons/favicon.svg" alt="GitHub" style="width: 30px; vertical-align: middle;">
+                        <span class="lang-en" style="vertical-align: middle; margin-left: 5px;">Source Code</span>
+                        <span class="lang-zh" style="vertical-align: middle; margin-left: 5px;">GitHub源代码</span>
+                        <span class="lang-ko" style="vertical-align: middle; margin-left: 5px;">소스 코드</span>
+                    </a>
+                </div>
+            </div>
+            
+            <p class="lang-en">Developed an AI system leveraging large language models to generate artistic illustrations through natural language descriptions. 
+                <span style="color: #e74c3c; font-size: 0.9em;">[Project Note: Under development]</span></p>
+            <p class="lang-zh">基于大语言模型开发AI系统，实现通过自然语言描述生成艺术插画的功能。
+                <span style="color: #e74c3c; font-size: 0.9em;">[项目备注：由于水平限制暂未完成]</span></p>
+            <p class="lang-ko">대형 언어모델을 활용한 AI 시스템 개발로 자연어 설명을 통해 예술 일러스트 생성 기능 구현
+                <span style="color: #e74c3c; font-size: 0.9em;">[프로젝트 참고: 기술 수준 제한으로 인해 현재 미완성]</span></p>
+        </div>
+        <!-- 项目3 -->
+        <div class="project-entry" style="margin-bottom: 60px;">
+            <h3>
+                <span class="lang-en">3. House Prices - Advanced Regression Techniques</span>
+                <span class="lang-zh">3. 房价预测高级回归技术项目</span>
+                <span class="lang-ko">3. 주택 가격 예측 고급 회귀 기술 프로젝트</span>
+            </h3>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques" target="_blank" style="text-decoration: none;">
+                        <img src="https://www.kaggle.com/static/images/site-logo.svg" alt="Kaggle" style="width: 30px; vertical-align: middle;">
+                        <span class="lang-en" style="vertical-align: middle; margin-left: 5px;">Kaggle Competition</span>
+                        <span class="lang-zh" style="vertical-align: middle; margin-left: 5px;">Kaggle竞赛页面</span>
+                        <span class="lang-ko" style="vertical-align: middle; margin-left: 5px;">Kaggle 경진대회</span>
+                    </a>
+                </div>
+                
+                <div style="display: inline-block; margin: 0 15px;">
+                    <a href="https://github.com/zlcgacn/house-prices-advanced-regression-techniques" target="_blank" style="text-decoration: none;">
+                        <img src="https://github.githubassets.com/favicons/favicon.svg" alt="GitHub" style="width: 30px; vertical-align: middle;">
+                        <span class="lang-en" style="vertical-align: middle; margin-left: 5px;">Source Code</span>
+                        <span class="lang-zh" style="vertical-align: middle; margin-left: 5px;">GitHub源代码</span>
+                        <span class="lang-ko" style="vertical-align: middle; margin-left: 5px;">소스 코드</span>
+                    </a>
+                </div>
+            </div>
+            
+            <p class="lang-en">Applied advanced regression techniques including Lasso, Ridge, and ElasticNet to predict housing prices, achieving top 15% performance through feature engineering and model stacking.</p>
+            <p class="lang-zh">应用Lasso、Ridge和ElasticNet等高级回归技术预测房价，通过特征工程和模型融合达到前15%的预测精度。</p>
+            <p class="lang-ko">Lasso, Ridge 및 ElasticNet과 같은 고급 회귀 기술을 적용하여 주택 가격을 예측하고 특성 공학 및 모델 스태킹을 통해 상위 15% 성능 달성</p>
+        </div>
+    </div>
+</section>
+
+     <!-- 技能 区段 -->
+     <section id="skills" class="content-section scroll-reveal">
+         <h2>
+            <span class="lang-en">Skills</span>
+            <span class="lang-zh">技能</span>
+            <span class="lang-ko">기술</span>
+         </h2>
+        <div class="lang-en">
+            <ol>
+                <li>Python programming fundamentals</li>
+                <li>C++ programming basics</li>
+                <li>Java core programming</li>
+                <li>Web development with HTML/CSS/JavaScript</li>
+                <li>Machine learning (beginner level)</li>
+                <li>Understanding of AI/LLM basic concepts</li>
+                <li>Large Language Model deployment</li>
+                <li>API integration capabilities</li>
+                <li>Google Gemini SDK usage</li>
+                <li>Prompt Engineering basics</li>
+                <li>Code error handling & robustness</li>
+                <li>Jupyter/Kaggle environment tools</li>
+                <li>Data processing & analysis</li>
+                <li>Machine learning model application</li>
+                <li>ML workflow implementation</li>
+            </ol>
+        </div>
+        <div class="lang-zh">
+            <ol>
+                <li>Python 编程基础</li>
+                <li>C++ 编程基础</li>
+                <li>Java 编程基础</li>
+                <li>Html/Css/Javascript 网站开发</li>
+                <li>机器学习（初阶）</li>
+                <li>了解AI/大语言模型基础概念</li>
+                <li>大型语言模型部署</li>
+                <li>API交互能力</li>
+                <li>Google Generative AI（Gemini）SDK使用</li>
+                <li>提示工程基础</li>
+                <li>代码错误处理与健壮性</li>
+                <li>Jupyter/Kaggle开发环境</li>
+                <li>数据处理与分析</li>
+                <li>机器学习模型应用</li>
+                <li>机器学习工作流</li>
+            </ol>
+        </div>
+        <div class="lang-ko">
+            <ol>
+                <li>파이썬 프로그래밍 기초</li>
+                <li>C++ 프로그래밍 기초</li>
+                <li>자바 코어 프로그래밍</li>
+                <li>HTML/CSS/JavaScript 웹 개발</li>
+                <li>머신러닝 (초급)</li>
+                <li>AI/대형 언어모델 기본 개념 이해</li>
+                <li>대형 언어모델 배포</li>
+                <li>API 연동 능력</li>
+                <li>구글 제미니 SDK 사용</li>
+                <li>프롬프트 엔지니어링 기초</li>
+                <li>코드 오류 처리 및 견고성</li>
+                <li>주피터/캐글 개발 환경</li>
+                <li>데이터 처리 및 분석</li>
+                <li>머신러닝 모델 적용</li>
+                <li>머신러닝 워크플로우 구현</li>
+            </ol>
+        </div>
+    </section>
+
+        <!-- 联系我 区段 -->
+        <section id="contact" class="content-section scroll-reveal">
+            <h2>
+                <span class="lang-en">Contact</span>
+                <span class="lang-zh">联系我</span>
+                <span class="lang-ko">연락처</span>
+            </h2>
+    
+            <!-- 新增: 用于垂直排列 WeChat 和 Email -->
+            <div class="contact-details" style="text-align: center; margin-bottom: 20px;">
+                <!-- WeChat 行 -->
+                <div style="margin-bottom: 15px; display: inline-block; text-align: left;"> <!-- 使用 inline-block 和 text-align:left 来对齐图标和文本 -->
+                    <img src="WeChat.jpg" alt="WeChat 图标" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 10px;">
+                    <span style="vertical-align: middle; font-size: 1.1em; color: #333;">18221293513</span>
+                </div>
+                <br> <!-- 强制换行 -->
+                <!-- Email 行 -->
+                 <div style="display: inline-block; text-align: left;">
+                     <a href="mailto:longchizhou@gmail.com" title="Email" style="text-decoration: none; color: inherit;"> <!-- 使整个区域可点击发送邮件 -->
+                         <img src="email.jpg" alt="Email 图标" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 10px;">
+                         <span style="vertical-align: middle; font-size: 1.1em; color: #333;">longchizhou@gmail.com</span>
+                     </a>
+                </div>
+                <br>
+
+                <div>
+                    <a href="https://www.kaggle.com/longchizhou" target="_blank">
+                        <img src="https://www.kaggle.com/static/images/site-logo.svg" alt="Kaggle" style="width: 60px;">
+                        <span class="lang-en">Kaggle Profile</span>
+                        <span class="lang-zh">Kaggle主页</span>
+                        <span class="lang-ko">Kaggle 프로필</span>
+                    </a>
+                </div>
+            </div>
+    
+            <!-- 保留: 用于水平排列其余社交图标 -->
+            <div class="social-icons" style="text-align: center; padding-top: 10px;"> <!-- 减少了顶部内边距 -->
+                 <!-- GitHub -->
+                 <a href="https://github.com/zlcgacn" target="_blank" title="GitHub" style="display: inline-block; margin: 0 15px;">
+                     <img src="GitHub.jpg" alt="GitHub 图标" style="width: 40px; height: 40px; vertical-align: middle;">
+                 </a>
+                 <!-- X (Twitter) -->
+                 <a href="https://x.com/LZhou22743" target="_blank" title="X (Twitter)" style="display: inline-block; margin: 0 15px;">
+                     <img src="X.jpg" alt="X 图标" style="width: 40px; height: 40px; vertical-align: middle;">
+                 </a>
+                 <!-- QQ空间 -->
+                 <a href="https://user.qzone.qq.com/3363702935/infocenter" target="_blank" title="QQ" style="display: inline-block; margin: 0 15px;">
+                     <!-- 注意：图片文件名来自你的截图 -->
+                     <img src="QQ空间.jpg" alt="QQ 图标" style="width: 40px; height: 40px; vertical-align: middle;">
+                 </a>
+            </div>
+        </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>
+            <!-- 更新为你名字的版权信息 -->
+            <span class="lang-en">© 2025 Zhou Long Chi. All rights reserved.</span>
+            <span class="lang-zh">© 2025 周龙迟. 版权所有.</span>
+            <span class="lang-ko">© 2025 저우롱치. 모든 권리 보유.</span>
+        </p>
+    </footer>
+
+    <!-- 内部 JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { // 中文注释：等待 HTML 文档完全加载和解析
+
+            // --- 语言切换逻辑 (保持不变) ---
+            const langSwitcher = document.getElementById('lang-switcher');
+            const body = document.body;
+            const langButtons = langSwitcher.querySelectorAll('button');
+
+            // 中文注释：设置页面显示语言的函数
+            function setLanguage(lang) {
+                body.className = 'show-' + lang; // 中文注释：给 body 添加对应的类来控制显示哪个语言的 span
+                langButtons.forEach(button => { // 中文注释：更新语言切换按钮的激活状态
+                    if (button.getAttribute('data-lang') === lang) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                });
+                // 可选: 保存用户偏好到本地存储
+                // localStorage.setItem('preferredLang', lang);
+            }
+
+            // 中文注释：为每个语言按钮添加点击事件监听器
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const lang = button.getAttribute('data-lang');
+                    setLanguage(lang); // 中文注释：点击时调用设置语言函数
+                });
+            });
+
+            // 中文注释：初始化页面语言（基于 body 的初始类或本地存储）
+            const initialLang = body.className.split('-')[1] || 'en';
+            setLanguage(initialLang);
+
+
+            // --- 滚动动画逻辑 (更新回调函数) ---
+            // 中文注释：选择所有需要应用滚动动画效果的元素
+            const revealElements = document.querySelectorAll('.scroll-reveal');
+
+            // 中文注释：Intersection Observer 的配置选项
+            const observerOptions = {
+                root: null, // 相对于视口
+                threshold: 0.1 // 元素至少 10% 进入视口时触发
+            };
+
+            // 中文注释：Intersection Observer 的回调函数 (已更新)
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    // entry.isIntersecting 是一个布尔值，表示元素当前是否与视口交叉
+                    if (entry.isIntersecting) { // 中文注释：判断元素是否进入视口
+                        entry.target.classList.add('visible'); // 中文注释：进入视口，添加 'visible' 类，播放动画 (CSS transition 生效)
+                    } else { // 中文注释：否则（即元素离开视口）
+                        entry.target.classList.remove('visible'); // 中文注释：离开视口，移除 'visible' 类，重置状态 (回到初始透明、偏移的状态)
+                    }
+                });
+            };
+
+            // 中文注释：创建 Intersection Observer 实例
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+            // 中文注释：让 observer 开始观察所有选中的元素
+            revealElements.forEach(el => {
+                observer.observe(el); // 中文注释：对每个需要动画的元素调用 observe 方法
+            });
+
+        }); // DOMContentLoaded 事件结束
+    </script>
+
+</body>
+</html>
+
+    <!-- 修复点：将样式移回<head>的<style>标签内 -->
+    <style>
+        /* 作品集项目样式 */
+        .project-entry {
+            margin-bottom: 60px;
+            padding: 25px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>

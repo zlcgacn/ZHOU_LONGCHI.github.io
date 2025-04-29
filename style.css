@@ -1,0 +1,775 @@
+/* 基本重置和默认值 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* === Global Enhancements === */
+html {
+    scroll-behavior: smooth; /* Enable smooth scrolling globally */
+    scroll-padding-top: 80px; /* Offset for fixed header when scrolling to anchors */
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.7; /* Slightly increased line-height */
+    color: #555; /* Slightly lighter default text */
+    background-color: #f8f9fa; /* Lighter, cleaner background */
+    background-image: none; /* Remove the subtle pattern for a cleaner look */
+    -webkit-font-smoothing: antialiased; /* Smoother fonts on WebKit browsers */
+    -moz-osx-font-smoothing: grayscale; /* Smoother fonts on Firefox */
+}
+
+/* 默认显示中文 (因为上面 body class="show-zh") */
+body.show-en .lang-zh, body.show-en .lang-ko { display: none !important; }
+body.show-en .lang-en { display: inline !important; }
+
+body.show-ko .lang-en, body.show-ko .lang-zh { display: none !important; }
+body.show-ko .lang-ko { display: inline !important; }
+
+body.show-zh .lang-en, body.show-zh .lang-ko { display: none !important; }
+body.show-zh .lang-zh { display: inline !important; }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600; /* Slightly less bold */
+    color: #343a40; /* Darker heading color */
+    line-height: 1.3;
+}
+
+a {
+    color: #007bff; /* Standard Bootstrap blue */
+    text-decoration: none;
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: none; /* Remove underline on hover for a cleaner look */
+}
+
+/* === Language Switcher === */
+.language-switcher {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 1001;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly less transparent */
+    padding: 8px 12px; /* Adjusted padding */
+    border-radius: 20px; /* Pill shape */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.language-switcher button {
+    background: none;
+    border: none;
+    padding: 6px 10px; /* Adjusted padding */
+    cursor: pointer;
+    font-size: 0.85em;
+    color: #555;
+    margin-left: 4px;
+    border-radius: 15px; /* Rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: 500;
+}
+
+.language-switcher button:hover {
+    background-color: #eee;
+}
+
+.language-switcher button.active {
+    font-weight: 600; /* Bold active */
+    text-decoration: none; /* Remove underline */
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 1px 4px rgba(0, 123, 255, 0.4);
+}
+
+/* === Header Navigation === */
+header {
+    width: 100%;
+    padding: 12px 0; /* Reduced padding */
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.98); /* Slightly transparent white */
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(5px);
+    border-bottom: 1px solid #dee2e6; /* Lighter border */
+    position: fixed;
+    top: 0;
+    left: 0; /* Ensure it spans full width */
+    z-index: 1000;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    transition: padding 0.3s ease;
+}
+
+/* Add class via JS on scroll? For now, keep it simple */
+/* header.scrolled { padding: 8px 0; } */
+
+header nav ul {
+    list-style: none;
+    display: inline-block;
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+header nav ul li {
+    display: inline-block;
+    margin: 0 18px; /* Increased spacing */
+}
+
+header nav ul li a {
+    color: #495057; /* Slightly muted nav link color */
+    font-weight: 500;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px; /* Reduced letter spacing */
+    transition: color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    padding: 5px 0; /* Add vertical padding for better click area */
+    position: relative; /* For hover effect */
+}
+
+header nav ul li a::after { /* Underline hover effect */
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 4px;
+    right: 0;
+    background: #007bff;
+    transition: width 0.3s ease;
+    -webkit-transition: width 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+    width: 100%;
+    left: 0;
+    background-color: #007bff;
+}
+
+header nav ul li a:hover {
+    color: #007bff;
+    transform: none; /* Remove the jumpy transform */
+}
+
+/* === Hero Section === */
+#hero {
+    height: 90vh;
+    background-image: url('周龙迟专用头像.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed; /* Keep fixed for parallax */
+    position: relative;
+    background-color: #343a40; /* Darker fallback */
+    margin-top: 65px; /* Adjusted for header height */
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: none;
+}
+
+#hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Slightly stronger gradient for better text contrast if needed */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.5) 100%);
+    z-index: 1;
+}
+
+/* === Welcome Section === */
+#welcome {
+    background-color: #ffffff;
+    padding: 70px 40px; /* Increased padding slightly */
+    text-align: center;
+    position: relative;
+    margin-top: -120px; /* Even more overlap */
+    margin-bottom: 80px; /* Add space after welcome section */
+    border-radius: 16px;
+    /* Enhanced shadow for more depth */
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 5;
+    border: 1px solid #e9ecef;
+}
+
+#welcome h2 {
+    font-family: 'Poppins', sans-serif; /* Use Poppins consistently */
+    font-size: 3.5em; /* Adjusted size */
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+}
+
+#welcome h2::after {
+    /* More subtle underline */
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 3px;
+    background: #007bff;
+    border-radius: 2px;
+}
+
+#welcome p {
+    font-size: 1.1em; /* Adjusted size */
+    color: #6c757d; /* Muted text color */
+    max-width: 650px; /* Adjusted width */
+    margin: 0 auto 25px auto; /* Adjusted margin */
+    line-height: 1.8;
+}
+
+#welcome p:last-child {
+    margin-bottom: 0; /* Remove bottom margin from last paragraph */
+    font-size: 1.0em;
+    color: #6c757d;
+}
+
+/* === Content Section (General) === */
+.content-section {
+    padding: 100px 30px; /* Increased vertical padding */
+    max-width: 1000px;
+    margin: 80px auto; /* Increased vertical margin */
+    min-height: auto;
+    border-bottom: none;
+    padding-top: 100px; /* Match padding */
+    position: relative;
+    background-color: #fff;
+    border-radius: 12px;
+    /* Slightly stronger shadow */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e9ecef;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition */
+}
+
+/* Optional hover effect for sections */
+/* .content-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+} */
+
+/* Alternating Section Backgrounds for visual rhythm */
+.content-section:nth-of-type(odd) {
+    /* Keep default white or specific light color */
+     background-color: #ffffff;
+}
+.content-section:nth-of-type(even) {
+    /* Slightly different background for even sections */
+    background-color: #f8f9fa; /* Light grey matching body */
+}
+
+/* Ensure #contact overrides the alternating background if needed */
+#contact {
+    background-color: #e9ecef !important; /* Use !important cautiously */
+}
+
+/* Remove the decorative line */
+.content-section:not(:first-child)::before {
+    content: none;
+}
+
+.content-section:last-child {
+    margin-bottom: 60px; /* Ensure space before footer */
+}
+
+.content-section h2 {
+    text-align: center;
+    margin-bottom: 50px; /* Increased margin */
+    font-size: 2.5em; /* Larger section titles */
+    color: #343a40;
+    position: relative;
+    display: block; /* Make it block level */
+    left: auto;
+    transform: none;
+}
+
+.content-section h2::after { /* Add underline to section titles */
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #007bff;
+    border-radius: 2px;
+}
+
+/* === About Section === */
+#about {
+    background-color: #fff; /* Explicit white background */
+}
+
+#about p {
+    margin-bottom: 1.8em; /* Increased spacing */
+    line-height: 1.8; /* Better readability */
+    color: #555;
+}
+
+/* === Skills Section === */
+#skills ol {
+    list-style-position: inside;
+    padding-left: 0;
+    counter-reset: skill-counter;
+    list-style-type: none;
+    display: flex; /* Use Flexbox */
+    flex-wrap: wrap; /* Allow items to wrap to the next row */
+    gap: 40px 60px; /* Row gap and column gap */
+}
+
+#skills ol li {
+    position: relative;
+    padding-left: 35px; /* Increased padding for icon */
+    margin-bottom: 0; /* Remove bottom margin, handled by gap */
+    counter-increment: skill-counter;
+    line-height: 1.6;
+    color: #555;
+    flex-basis: calc(50% - 30px); /* Each item takes roughly half width minus half the column gap */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+#skills ol li::before {
+    content: counter(skill-counter);
+    position: absolute;
+    left: 0;
+    top: 2px; /* Align better with text */
+    width: 24px; /* Larger icon */
+    height: 24px;
+    background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient background */
+    color: white;
+    font-size: 0.8em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+}
+
+#skills ol li b {
+    font-weight: 600; /* Match heading weight */
+    display: block;
+    margin-bottom: 0.4em; /* Increased spacing */
+    font-size: 1.15em; /* Slightly larger */
+    color: #343a40; /* Match heading color */
+}
+
+/* === Contact Section === */
+#contact {
+    background-color: #e9ecef; /* Light grey background for contrast */
+    box-shadow: none; /* Remove outer shadow */
+    border-radius: 12px;
+    padding: 50px 40px; /* Adjusted padding */
+    margin-top: 60px;
+    border: none; /* Remove border */
+}
+
+#contact h2 {
+    margin-bottom: 50px;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px; /* Increased gap */
+    margin-bottom: 40px; /* Increased margin */
+    background-color: #fff; /* White background for inner card */
+    padding: 40px; /* Increased padding */
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    width: 100%;
+    max-width: 500px; /* Limit width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Remove inline styles from HTML if possible */
+.contact-details > div {
+    display: flex;
+    align-items: center;
+    padding: 0; /* Remove padding, handled by gap */
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    width: auto; /* Let flexbox handle width */
+    max-width: none;
+    text-align: left;
+}
+
+.contact-details > div:hover {
+    background-color: transparent; /* No background change on hover */
+    transform: none; /* No transform on hover */
+}
+
+.contact-details img {
+    width: 30px; /* Consistent icon size */
+    height: 30px;
+    margin-right: 15px;
+    vertical-align: middle;
+    filter: grayscale(50%); /* Slightly desaturate icons */
+    transition: filter 0.3s ease;
+}
+.contact-details a:hover img {
+    filter: grayscale(0%); /* Full color on hover */
+}
+
+
+.contact-details span, .contact-details a {
+    vertical-align: middle;
+    font-size: 1.05em; /* Slightly adjusted */
+    color: #495057;
+    word-break: break-all; /* Prevent long emails/IDs from overflowing */
+}
+
+.contact-details a:hover span {
+    color: #0056b3;
+}
+.contact-details a {
+    display: inline-flex; /* Ensure link wraps icon and text */
+    align-items: center;
+}
+
+/* --- Social Icons --- */
+.social-icons {
+    text-align: center;
+    padding: 20px 0 0 0; /* Removed bottom padding, added top padding */
+}
+.social-icons a {
+    display: inline-block;
+    margin: 0 12px; /* Adjusted margin */
+    color: #6c757d;
+    transition: color 0.3s ease, transform 0.3s ease;
+    opacity: 0.7; /* Slightly more subtle */
+}
+.social-icons a img {
+    width: 32px; /* Smaller social icons */
+    height: 32px;
+    vertical-align: middle;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: grayscale(80%); /* Grayscale icons */
+}
+.social-icons a:hover {
+    color: #007bff;
+    opacity: 1;
+    transform: translateY(-3px);
+}
+.social-icons a:hover img {
+    transform: scale(1.1);
+    filter: grayscale(0%); /* Full color on hover */
+}
+
+
+/* --- Scroll Animations --- */
+/* Keep existing scroll animations, maybe adjust thresholds/offsets if needed */
+.scroll-reveal {
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1); /* Smoother easing */
+    will-change: transform, opacity;
+}
+
+.scroll-reveal.reveal-from-bottom {
+    transform: translateY(40px);
+}
+
+.scroll-reveal.reveal-from-top {
+    transform: translateY(-40px);
+}
+
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 增强的滚动动画效果 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-on-scroll {
+    opacity: 0;
+}
+
+.animate-on-scroll.animated {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* 响应式设计优化 */
+@media (max-width: 992px) {
+    .content-section {
+        max-width: 90%;
+    }
+    #welcome {
+         max-width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        line-height: 1.6; /* Adjust line height for smaller screens */
+    }
+
+    header {
+        padding: 10px 0;
+    }
+
+    header nav ul li {
+        margin: 0 10px; /* Reduced nav spacing */
+    }
+     header nav ul li a {
+        font-size: 0.8em;
+    }
+
+    #hero {
+        height: 70vh;
+        margin-top: 58px; /* Adjust for smaller header */
+    }
+
+    #welcome {
+        padding: 40px 20px;
+        margin-top: -60px;
+        max-width: 90%;
+    }
+
+    #welcome h2 {
+        font-size: 2.8em; /* Smaller heading */
+    }
+     #welcome p {
+        font-size: 1em;
+    }
+
+
+    .content-section {
+        padding: 60px 20px; /* Adjust padding */
+        padding-top: 60px;
+        margin: 40px auto;
+    }
+
+    .content-section h2 {
+        font-size: 2em; /* Smaller section titles */
+        margin-bottom: 40px;
+    }
+     .content-section h2::after {
+         width: 50px;
+         bottom: -8px;
+     }
+
+    #skills ol {
+        gap: 25px; /* Reduce gap on smaller screens */
+    }
+     #skills ol li {
+         padding-left: 30px;
+         flex-basis: 100%; /* Full width on smaller screens */
+     }
+     #skills ol li::before {
+         width: 22px;
+         height: 22px;
+     }
+
+
+    #contact {
+        padding: 40px 20px;
+    }
+
+    .contact-details {
+        padding: 30px 20px;
+        max-width: none; /* Full width */
+        gap: 20px;
+    }
+     .contact-details img {
+         width: 28px;
+         height: 28px;
+     }
+     .contact-details span, .contact-details a {
+         font-size: 1em;
+     }
+
+    .social-icons a img {
+        width: 30px;
+        height: 30px;
+    }
+    .social-icons a {
+        margin: 0 10px;
+    }
+
+
+    .project-entry {
+        padding: 25px;
+    }
+     .project-entry h3 {
+         font-size: 1.2em;
+     }
+     .project-links {
+         text-align: center; /* Center links on small screens */
+     }
+     .project-links a {
+         margin: 5px; /* Adjust margin for centered layout */
+         padding: 7px 12px;
+         font-size: 0.85em;
+     }
+
+    footer {
+        padding: 2rem 0;
+        margin-top: 60px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+    .language-switcher {
+        padding: 6px 10px;
+        right: 10px;
+        top: 10px;
+    }
+     .language-switcher button {
+         padding: 5px 8px;
+         font-size: 0.8em;
+     }
+
+
+     header nav ul {
+        display: block; /* Stack nav items? Or keep inline? Keep inline for now */
+     }
+      header nav ul li {
+        margin: 0 8px;
+    }
+     header nav ul li a {
+         font-size: 0.75em;
+     }
+
+
+    #welcome h2 {
+        font-size: 2.2em;
+    }
+    #welcome p {
+        font-size: 0.95em;
+    }
+
+    .content-section h2 {
+        font-size: 1.8em;
+    }
+
+}
+
+/* Ensure scroll reveal animations still work */
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Remove specific inline styles from HTML if they conflict */
+/* Consider removing text-indent: 2em; from #about p in HTML and handle via CSS if desired */
+#about p {
+    text-indent: 2em; /* Keep the indent */
+}
+
+/* Handle the red italic text for project 4 via CSS */
+#portfolio .project-entry:nth-of-type(4) h3 span,
+#portfolio .project-entry:nth-of-type(4) .project-links a span {
+    color: #dc3545 !important; /* Bootstrap danger color */
+    font-style: italic !important;
+}
+
+/* 作品集项目样式 */
+.project-entry {
+    margin-bottom: 40px; /* Reduced margin between projects */
+    padding: 30px; /* Consistent padding */
+    border-radius: 10px; /* Consistent radius */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07); /* Slightly softer shadow */
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent; /* Add border for consistency, transparent initially */
+    background-color: #ffffff; /* Default white background */
+}
+
+/* Add a border color based on type? */
+#portfolio .project-entry:nth-of-type(odd) { border-left: 4px solid #007bff; }
+#portfolio .project-entry:nth-of-type(even) { border-left: 4px solid #17a2b8; } /* Example alternate color */
+
+#portfolio .project-entry:hover {
+    transform: translateY(-5px) scale(1.01); /* Add slight scale on hover */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.project-entry h3 {
+    margin-bottom: 15px; /* Reduced margin */
+    border-bottom: 1px solid #eee; /* Lighter border */
+    padding-bottom: 15px;
+    font-size: 1.4em; /* Adjusted size */
+    color: #343a40;
+    line-height: 1.4;
+}
+
+/* Project links container */
+.project-links {
+    text-align: right; /* Align links to the right */
+    margin-top: 20px;
+}
+
+.project-links a {
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px; /* Adjusted padding */
+    border-radius: 20px; /* Pill shape */
+    background-color: rgba(0, 123, 255, 0.1); /* Light blue background */
+    transition: all 0.3s ease;
+    margin-left: 10px; /* Use margin-left */
+    font-size: 0.9em;
+    color: #007bff;
+}
+
+.project-links a:hover {
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+.project-links a img {
+    margin-right: 6px; /* Adjusted icon margin */
+    width: 16px; /* Smaller icons in links */
+    height: 16px;
+    filter: grayscale(100%) brightness(1.5); /* Adjust icon appearance */
+}
+
+.project-links a:hover img {
+     filter: brightness(0) invert(1); /* White icon on hover */
+}
+
+/* Remove inline styles from HTML project divs/links if possible */
+
+/* --- 页脚 --- */
+footer {
+    text-align: center;
+    padding: 3rem 0; /* Adjusted padding */
+    margin-top: 80px; /* Increased margin */
+    background-color: #343a40; /* Dark footer */
+    color: rgba(255, 255, 255, 0.7); /* Lighter text on dark background */
+    font-size: 0.9em;
+    border-top: none; /* Remove top border */
+}
+
+footer p {
+    margin: 0;
+} 

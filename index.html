@@ -1,214 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>周龙迟的个人网站</title>
-    <!-- 内部 CSS -->
-    <style>
-        /* 基本重置和默认值 */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        /* 默认显示中文 (因为上面 body class="show-zh") */
-        body.show-en .lang-zh, body.show-en .lang-ko { display: none !important; }
-        body.show-en .lang-en { display: inline !important; }
-
-        body.show-ko .lang-en, body.show-ko .lang-zh { display: none !important; }
-        body.show-ko .lang-ko { display: inline !important; }
-
-        body.show-zh .lang-en, body.show-zh .lang-ko { display: none !important; }
-        body.show-zh .lang-zh { display: inline !important; }
-
-        a {
-            color: #555;
-            text-decoration: none;
-        }
-
-        /* --- 语言切换器 --- */
-        .language-switcher {
-            position: fixed;
-            top: 15px;
-            right: 20px;
-            z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .language-switcher button {
-            background: none;
-            border: none;
-            padding: 5px 8px;
-            cursor: pointer;
-            font-size: 0.9em;
-            color: #333;
-            margin-left: 5px;
-        }
-
-        .language-switcher button.active {
-            font-weight: bold;
-            text-decoration: underline;
-        }
-
-        /* --- 头部导航 --- */
-        header {
-            width: 100%;
-            padding: 15px 0;
-            text-align: center;
-            background-color: white;
-            border-bottom: 1px solid #eee;
-        }
-
-        header nav ul {
-            list-style: none;
-            display: inline-block;
-        }
-
-        header nav ul li {
-            display: inline-block;
-            margin: 0 15px;
-        }
-
-        header nav ul li a {
-            color: #555;
-            font-weight: 500;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
-        }
-        header nav ul li a:hover {
-            color: #000;
-        }
-
-        /* --- 首屏区域 (头图) --- */
-        #hero {
-            height: 75vh;
-            background-image: url('周龙迟专用头像.jpg');
-            background-size: cover;
-            background-position: center center;
-            position: relative;
-            background-color: #f0f0f0;
-        }
-
-        /* --- 欢迎区域 (名字区域) --- */
-        #welcome {
-            background-color: #eaf3f7;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        #welcome h2 {
-            font-family: 'Brush Script MT', 'Brush Script Std', cursive,
-                         'STXingkai', '华文行楷', 'STKaiti', 'KaiTi', '楷体',
-                         'Nanum Brush Script',
-                         'Malgun Gothic', 'Apple SD Gothic Neo',
-                         'PingFang SC', 'Microsoft YaHei',
-                         sans-serif;
-            font-size: 4em;
-            font-weight: normal;
-            color: #444;
-            margin-bottom: 20px;
-        }
-
-        #welcome p {
-            font-size: 1.1em;
-            color: #666;
-            max-width: 650px;
-            margin: 0 auto 15px auto;
-        }
-
-        #welcome p:last-child {
-            font-size: 0.9em;
-            color: #777;
-        }
-
-        /* --- 内容区段样式 (通用) --- */
-        .content-section {
-            padding: 80px 20px;
-            max-width: 960px;
-            margin: 0 auto;
-            min-height: 300px;
-            border-bottom: 1px solid #eee;
-        }
-        .content-section:last-child{
-            border-bottom: none;
-        }
-
-        .content-section h2 {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 2.2em;
-            color: #333;
-        }
-
-        /* --- 联系我板块的社交图标样式 --- */
-        .social-icons {
-            text-align: center;
-            padding: 30px 0;
-        }
-        .social-icons a {
-            display: inline-block;
-            margin: 0 15px;
-            font-size: 2.5em;
-            color: #555;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .social-icons a:hover {
-            color: #000;
-            transform: scale(1.1);
-        }
-
-        /* --- 滚动动画 --- */
-        .scroll-reveal {
-            opacity: 0;
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-            will-change: transform, opacity;
-        }
-
-        .scroll-reveal.reveal-from-bottom {
-            transform: translateY(40px);
-        }
-
-        .scroll-reveal.reveal-from-top {
-            transform: translateY(-40px);
-        }
-
-        .scroll-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- 页脚 --- */
-        footer {
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 120px;
-            background-color: #f8f8f8;
-            color: #777;
-            font-size: 0.9em;
-        }
-
-        /* 作品集项目样式 */
-        .project-entry {
-            margin-bottom: 60px;
-            padding: 25px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zaire's Personal Website</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body class="show-zh">
+<body class="en">
 
     <!-- 语言切换器 -->
     <div class="language-switcher" id="lang-switcher">
@@ -392,12 +194,9 @@
                 </div>
             </div>
             
-            <p class="lang-en">Developed an AI system leveraging large language models to generate artistic illustrations through natural language descriptions. 
-                <span style="color: #e74c3c; font-size: 0.9em;">[Project Note: Under development]</span></p>
-            <p class="lang-zh">基于大语言模型开发AI系统，实现通过自然语言描述生成艺术插画的功能。
-                <span style="color: #e74c3c; font-size: 0.9em;">[项目备注：由于水平限制暂未完成]</span></p>
-            <p class="lang-ko">대형 언어모델을 활용한 AI 시스템 개발로 자연어 설명을 통해 예술 일러스트 생성 기능 구현
-                <span style="color: #e74c3c; font-size: 0.9em;">[프로젝트 참고: 기술 수준 제한으로 인해 현재 미완성]</span></p>
+            <p class="lang-en">Developed an AI system leveraging large language models to generate artistic illustrations through natural language descriptions.</p>
+            <p class="lang-zh">基于大语言模型开发AI系统，实现通过自然语言描述生成艺术插画的功能。</p>
+            <p class="lang-ko">대형 언어모델을 활용한 AI 시스템 개발로 자연어 설명을 통해 예술 일러스트 생성 기능 구현</p>
         </div>
         <!-- 项目3 -->
         <div class="project-entry" style="margin-bottom: 60px;">
@@ -471,6 +270,27 @@
             <p class="lang-zh">这个项目是一个使用 Python 编写的网络爬虫，旨在从特定网站抓取韩国首尔地区的旅游景点信息，并将数据保存为 JSON 格式。</p>
             <p class="lang-ko">이 프로젝트는 파이썬으로 작성된 웹 크롤러로, 특정 웹사이트에서 대한민국 서울 지역의 관광 명소 정보를 스크래핑하여 데이터를 JSON 형식으로 저장하도록 설계되었습니다.</p>
         </div>
+        <!-- 项目6 -->
+        <div class="project-entry" style="margin-bottom: 60px;">
+            <h3>
+                <span class="lang-en">6. Real-time AI Voice Chat</span>
+                <span class="lang-zh">6. 实时 AI 语音聊天</span>
+                <span class="lang-ko">6. 실시간 AI 음성 채팅</span>
+            </h3>
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="display: inline-block; margin: 0 15px;">
+                    <a href="https://github.com/zlcgacn/Language-Interaction-AI" target="_blank" style="text-decoration: none;">
+                        <img src="https://github.githubassets.com/favicons/favicon.svg" alt="GitHub" style="width: 30px; vertical-align: middle;">
+                        <span class="lang-en" style="vertical-align: middle; margin-left: 5px;">Source Code</span>
+                        <span class="lang-zh" style="vertical-align: middle; margin-left: 5px;">GitHub源代码</span>
+                        <span class="lang-ko" style="vertical-align: middle; margin-left: 5px;">소스 코드</span>
+                    </a>
+                </div>
+            </div>
+            <p class="lang-en">Implemented a real-time AI voice chat application connecting a web frontend (HTML/CSS/JS) with backend AI services (Python/FastAPI/WebSockets) using DeepSeek LLM for text generation and Minimax TTS for speech synthesis.</p>
+            <p class="lang-zh">实现了一个实时 AI 语音聊天应用，通过 WebSockets 将网页前端 (HTML/CSS/JS) 与后端 AI 服务 (Python/FastAPI) 连接，使用 DeepSeek LLM 生成文本，Minimax TTS 合成语音。</p>
+            <p class="lang-ko">웹 프론트엔드(HTML/CSS/JS)와 백엔드 AI 서비스(Python/FastAPI/WebSockets)를 연결하는 실시간 AI 음성 채팅 애플리케이션을 구현했습니다. DeepSeek LLM을 사용하여 텍스트를 생성하고 Minimax TTS를 사용하여 음성을 합성합니다.</p>
+        </div>
     </section>
 
      <!-- 技能 区段 -->
@@ -482,59 +302,68 @@
          </h2>
         <div class="lang-en">
             <ol>
-                <li>Python programming fundamentals</li>
-                <li>C++ programming basics</li>
-                <li>Java core programming</li>
-                <li>Web development with HTML/CSS/JavaScript</li>
-                <li>Machine learning (beginner level)</li>
-                <li>Understanding of AI/LLM basic concepts</li>
-                <li>Large Language Model deployment</li>
-                <li>API integration capabilities</li>
-                <li>Google Gemini SDK usage</li>
-                <li>Prompt Engineering basics</li>
-                <li>Code error handling & robustness</li>
-                <li>Jupyter/Kaggle environment tools</li>
-                <li>Data processing & analysis</li>
-                <li>Machine learning model application</li>
-                <li>ML workflow implementation</li>
+                <li><b>Python Programming Fundamentals:</b> Solid grasp of core Python syntax, data structures (lists, dictionaries, sets, tuples), control flow, functions, and object-oriented programming (OOP) concepts. Experience with standard libraries.</li>
+                <li><b>C++ Programming Basics:</b> Basic understanding of C++ syntax, variables, data types, control structures, functions, and fundamental OOP principles (classes, objects). Familiarity with basic memory management concepts.</li>
+                <li><b>Java Core Programming:</b> Understanding of Java syntax, primitive types, object-oriented principles (inheritance, polymorphism), core APIs (collections, I/O), and exception handling.</li>
+                <li><b>Web Development (HTML/CSS/JS):</b> Ability to structure web pages with HTML, style them using CSS (including basic layouts like Flexbox/Grid), and add interactivity with vanilla JavaScript (DOM manipulation, events).</li>
+                <li><b>Machine Learning (Beginner):</b> Foundational knowledge of ML concepts (supervised/unsupervised learning), familiarity with common algorithms (e.g., Linear Regression, Logistic Regression, k-NN), understanding of model training/evaluation. Experience with Scikit-learn.</li>
+                <li><b>AI/LLM Basic Concepts:</b> General understanding of AI fields, core concepts of Large Language Models (transformers, attention), their capabilities (text generation, summarization), and limitations.</li>
+                <li><b>Large Language Model Deployment:</b> Basic understanding of methods for deploying LLMs, including API-based access and simple local hosting concepts. Awareness of resource requirements.</li>
+                <li><b>Google Gemini SDK Usage:</b> Experience using the Google Gemini SDK for interacting with Gemini models, including sending prompts, configuring parameters, and processing responses.</li>
+                <li><b>Prompt Engineering Basics:</b> Understanding how to formulate effective prompts to guide LLM behavior (e.g., zero-shot, few-shot prompting, providing clear instructions/context).</li>
+                <li><b>Code Error Handling & Robustness:</b> Implementing basic error handling (try-except), writing defensive code, and understanding the importance of code robustness.</li>
+                <li><b>Jupyter/Kaggle Environment Tools:</b> Proficiency in using Jupyter Notebooks/Lab and the Kaggle platform for data exploration, model development, and code execution.</li>
+                <li><b>Data Processing & Analysis:</b> Experience with data cleaning, transformation, exploration using libraries like Pandas and NumPy. Basic data visualization skills (e.g., Matplotlib/Seaborn).</li>
+                <li><b>Machine Learning Model Application:</b> Ability to apply pre-trained or train simple models on datasets to solve classification/regression problems. Understanding model output interpretation.</li>
+                <li><b>ML Workflow Implementation:</b> Understanding and practical application of the ML lifecycle: data preparation, feature engineering, model selection, training, evaluation, and basic deployment concepts.</li>
+                <li><b>AI Integration Skills:</b> LLM API integration (e.g., DeepSeek), TTS API integration (e.g., Minimax), handling authentication, request structuring, and response parsing.</li>
+                <li><b>Communication Protocols:</b> Understanding of HTTP/HTTPS request/response model and deep understanding of WebSocket protocol for real-time communication.</li>
+                <li><b>System Design & Integration:</b> Full-stack thinking (frontend-backend flow), basic application architecture concepts, cross-component troubleshooting and debugging.</li>
+                <li><b>Soft Skills:</b> Independent problem-solving, research skills, basic project planning and management.</li>
             </ol>
         </div>
         <div class="lang-zh">
             <ol>
-                <li>Python 编程基础</li>
-                <li>C++ 编程基础</li>
-                <li>Java 编程基础</li>
-                <li>Html/Css/Javascript 网站开发</li>
-                <li>机器学习（初阶）</li>
-                <li>了解AI/大语言模型基础概念</li>
-                <li>大型语言模型部署</li>
-                <li>API交互能力</li>
-                <li>Google Generative AI（Gemini）SDK使用</li>
-                <li>提示工程基础</li>
-                <li>代码错误处理与健壮性</li>
-                <li>Jupyter/Kaggle开发环境</li>
-                <li>数据处理与分析</li>
-                <li>机器学习模型应用</li>
-                <li>机器学习工作流</li>
+                <li><b>Python 编程基础:</b> 扎实的 Python 核心语法、数据结构（列表、字典、集合、元组）、控制流、函数和面向对象编程（OOP）概念。熟悉标准库的使用。</li>
+                <li><b>C++ 编程基础:</b> 基本掌握 C++ 语法、变量、数据类型、控制结构、函数以及基础的面向对象编程（OOP）原则（类、对象）。了解基础的内存管理概念。</li>
+                <li><b>Java 编程基础:</b> 理解 Java 语法、基本数据类型、面向对象原则（继承、多态）、核心 API（集合、I/O）和异常处理。</li>
+                <li><b>Web 开发 (HTML/CSS/JS):</b> 能够使用 HTML 构建网页结构，使用 CSS 进行样式设计（包括 Flexbox/Grid 等基本布局），并使用原生 JavaScript 添加交互性（DOM 操作、事件处理）。</li>
+                <li><b>机器学习（初阶）:</b> 掌握机器学习基础概念（监督/无监督学习），熟悉常用算法（如线性回归、逻辑回归、k-NN），理解模型训练/评估流程。有使用 Scikit-learn 等库的经验。</li>
+                <li><b>AI/LLM 基础概念:</b> 对人工智能领域、大型语言模型核心概念（Transformer、注意力机制）、能力（文本生成、摘要）及局限性有基本认知。</li>
+                <li><b>大型语言模型部署:</b> 对 LLM 的部署方式有基本了解，包括基于 API 的访问以及简单本地托管概念。了解资源需求。</li>
+                <li><b>Google Gemini SDK 使用:</b> 有使用 Google Gemini SDK 与 Gemini 模型交互的经验，包括发送提示、配置参数以及处理不同任务的响应。</li>
+                <li><b>提示工程基础:</b> 理解如何构建有效的提示以引导 LLM 行为（例如零样本、少样本提示、提供清晰指令/上下文）。</li>
+                <li><b>代码错误处理与健壮性:</b> 实现基本的错误处理（try-except 块），编写防御性代码，理解代码健壮性的重要性。</li>
+                <li><b>Jupyter/Kaggle 开发环境工具:</b> 熟练使用 Jupyter Notebook/Lab 和 Kaggle 平台进行数据探索、模型开发和代码执行。</li>
+                <li><b>数据处理与分析:</b> 使用 Pandas、NumPy 等库进行数据清洗、转换、探索的经验。基本的数据可视化技能（例如 Matplotlib/Seaborn）。</li>
+                <li><b>机器学习模型应用:</b> 能够将预训练或训练简单模型应用于数据集以解决分类/回归问题。理解模型输出解释。</li>
+                <li><b>机器学习工作流实现:</b> 理解并实践典型的机器学习生命周期：数据准备、特征工程、模型选择、训练、评估和基本部署概念。</li>
+                <li><b>AI 模型集成技能:</b> LLM API 集成 (如 DeepSeek), TTS API 集成 (如 Minimax), 处理认证、构造请求、解析响应。</li>
+                <li><b>通信协议知识:</b> 理解 HTTP/HTTPS 请求/响应模型，深入理解 WebSocket 协议及其在实时通信中的应用。</li>
+                <li><b>系统设计与整合能力:</b> 全栈思维 (前后端流程), 基本的应用架构概念, 跨组件问题排查与调试能力。</li>
+                <li><b>软技能:</b> 独立解决问题与研究能力, 基本的项目规划与管理能力。</li>
             </ol>
         </div>
         <div class="lang-ko">
             <ol>
-                <li>파이썬 프로그래밍 기초</li>
-                <li>C++ 프로그래밍 기초</li>
-                <li>자바 코어 프로그래밍</li>
-                <li>HTML/CSS/JavaScript 웹 개발</li>
-                <li>머신러닝 (초급)</li>
-                <li>AI/대형 언어모델 기본 개념 이해</li>
-                <li>대형 언어모델 배포</li>
-                <li>API 연동 능력</li>
-                <li>구글 제미니 SDK 사용</li>
-                <li>프롬프트 엔지니어링 기초</li>
-                <li>코드 오류 처리 및 견고성</li>
-                <li>주피터/캐글 개발 환경</li>
-                <li>데이터 처리 및 분석</li>
-                <li>머신러닝 모델 적용</li>
-                <li>머신러닝 워크플로우 구현</li>
+                <li><b>파이썬 프로그래밍 기초:</b> 핵심 파이썬 구문, 데이터 구조(리스트, 딕셔너리, 세트, 튜플), 제어 흐름, 함수 및 객체 지향 프로그래밍(OOP) 개념에 대한 확실한 이해. 표준 라이브러리 사용 경험.</li>
+                <li><b>C++ 프로그래밍 기초:</b> C++ 구문, 변수, 데이터 유형, 제어 구조, 함수 및 기본 OOP 원칙(클래스, 객체)에 대한 기본 이해. 기본 메모리 관리 개념에 익숙함.</li>
+                <li><b>자바 코어 프로그래밍:</b> 자바 구문, 기본 타입, 객체 지향 원칙(상속, 다형성), 핵심 API(컬렉션, I/O) 및 예외 처리에 대한 이해.</li>
+                <li><b>HTML/CSS/JavaScript 웹 개발:</b> HTML로 웹 페이지 구조화, CSS를 사용한 스타일링(Flexbox/Grid 포함), 바닐라 JavaScript를 사용한 상호작용 추가(DOM 조작, 이벤트) 능력.</li>
+                <li><b>머신러닝 (초급):</b> ML 기본 개념(지도/비지도 학습)에 대한 기초 지식, 일반적인 알고리즘(예: 선형 회귀, 로지스틱 회귀, k-NN)에 대한 친숙함, 모델 훈련/평가 프로세스 이해. Scikit-learn 사용 경험.</li>
+                <li><b>AI/LLM 기본 개념 이해:</b> 인공 지능 분야, 대형 언어 모델 핵심 개념(트랜스포머, 어텐션), 기능(텍스트 생성, 요약) 및 한계에 대한 일반적인 이해.</li>
+                <li><b>대형 언어모델 배포:</b> API 기반 액세스 및 간단한 로컬 호스팅 개념을 포함한 LLM 배포 방법에 대한 기본 이해. 리소스 요구 사항 인지.</li>
+                <li><b>구글 제미니 SDK 사용:</b> Google Gemini SDK를 사용하여 Gemini 모델과 상호 작용한 경험, 프롬프트 전송, 매개변수 구성 및 응답 처리 포함.</li>
+                <li><b>프롬프트 엔지니어링 기초:</b> LLM 동작을 안내하는 효과적인 프롬프트 구성 방법 이해 (예: 제로샷, 퓨샷 프롬프팅, 명확한 지침/컨텍스트 제공).</li>
+                <li><b>코드 오류 처리 및 견고성:</b> 기본 오류 처리(try-except) 구현, 방어적 코드 작성, 코드 견고성의 중요성 이해.</li>
+                <li><b>Jupyter/Kaggle 개발 환경 도구:</b> 데이터 탐색, 모델 개발 및 코드 실행을 위해 Jupyter Notebook/Lab 및 Kaggle 플랫폼 사용 능력.</li>
+                <li><b>데이터 처리 및 분석:</b> Pandas 및 NumPy와 같은 라이브러리를 사용한 데이터 정리, 변환, 탐색 경험. 기본 데이터 시각화 기술 (예: Matplotlib/Seaborn).</li>
+                <li><b>머신러닝 모델 적용:</b> 사전 훈련된 모델 또는 간단한 모델을 데이터셋에 적용하여 분류/회귀 문제 해결 능력. 모델 출력 해석 이해.</li>
+                <li><b>ML Workflow Implementation:</b> ML 수명 주기(데이터 준비, 특징 공학, 모델 선택, 훈련, 평가 및 기본 배포 개념)에 대한 이해 및 실제 적용.</li>
+                <li><b>AI 모델 통합 기술:</b> LLM API 통합 (예: DeepSeek), TTS API 통합 (예: Minimax), 인증 처리, 요청 구성, 응답 구문 분석.</li>
+                <li><b>통신 프로토콜 지식:</b> HTTP/HTTPS 요청/응답 모델 이해 및 실시간 통신을 위한 WebSocket 프로토콜 심층 이해.</li>
+                <li><b>시스템 설계 및 통합 능력:</b> 풀스택 사고 (프론트엔드-백엔드 흐름), 기본 애플리케이션 아키텍처 개념, 구성 요소 간 문제 해결 및 디버깅.</li>
+                <li><b>소프트 스킬:</b> 독립적인 문제 해결 및 연구 능력, 기본적인 프로젝트 계획 및 관리 능력.</li>
             </ol>
         </div>
     </section>
@@ -602,74 +431,6 @@
         </p>
     </footer>
 
-    <!-- 内部 JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => { // 中文注释：等待 HTML 文档完全加载和解析
-
-            // --- 语言切换逻辑 (保持不变) ---
-            const langSwitcher = document.getElementById('lang-switcher');
-            const body = document.body;
-            const langButtons = langSwitcher.querySelectorAll('button');
-
-            // 中文注释：设置页面显示语言的函数
-            function setLanguage(lang) {
-                body.className = 'show-' + lang; // 中文注释：给 body 添加对应的类来控制显示哪个语言的 span
-                langButtons.forEach(button => { // 中文注释：更新语言切换按钮的激活状态
-                    if (button.getAttribute('data-lang') === lang) {
-                        button.classList.add('active');
-                    } else {
-                        button.classList.remove('active');
-                    }
-                });
-                // 可选: 保存用户偏好到本地存储
-                // localStorage.setItem('preferredLang', lang);
-            }
-
-            // 中文注释：为每个语言按钮添加点击事件监听器
-            langButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const lang = button.getAttribute('data-lang');
-                    setLanguage(lang); // 中文注释：点击时调用设置语言函数
-                });
-            });
-
-            // 中文注释：初始化页面语言（基于 body 的初始类或本地存储）
-            const initialLang = body.className.split('-')[1] || 'en';
-            setLanguage(initialLang);
-
-
-            // --- 滚动动画逻辑 (更新回调函数) ---
-            // 中文注释：选择所有需要应用滚动动画效果的元素
-            const revealElements = document.querySelectorAll('.scroll-reveal');
-
-            // 中文注释：Intersection Observer 的配置选项
-            const observerOptions = {
-                root: null, // 相对于视口
-                threshold: 0.1 // 元素至少 10% 进入视口时触发
-            };
-
-            // 中文注释：Intersection Observer 的回调函数 (已更新)
-            const observerCallback = (entries, observer) => {
-                entries.forEach(entry => {
-                    // entry.isIntersecting 是一个布尔值，表示元素当前是否与视口交叉
-                    if (entry.isIntersecting) { // 中文注释：判断元素是否进入视口
-                        entry.target.classList.add('visible'); // 中文注释：进入视口，添加 'visible' 类，播放动画 (CSS transition 生效)
-                    } else { // 中文注释：否则（即元素离开视口）
-                        entry.target.classList.remove('visible'); // 中文注释：离开视口，移除 'visible' 类，重置状态 (回到初始透明、偏移的状态)
-                    }
-                });
-            };
-
-            // 中文注释：创建 Intersection Observer 实例
-            const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-            // 中文注释：让 observer 开始观察所有选中的元素
-            revealElements.forEach(el => {
-                observer.observe(el); // 中文注释：对每个需要动画的元素调用 observe 方法
-            });
-
-        }); // DOMContentLoaded 事件结束
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
